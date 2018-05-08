@@ -1,0 +1,43 @@
+<div class="container"> 
+    <div class="container-4">
+        <input type="search" id="update" [(ngModel)]="search_text"  name="search" placeholder="Search" (keydown.enter)="onKeydown($event)" >
+    </div>          
+    <br>                                                                 
+    <div class="table-responsive">          
+    <table class="table table-striped" infiniteScroll
+    [infiniteScrollDistance]="2"
+    [infiniteScrollThrottle]="100"
+    (scrolled)="onScroll()">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Priority value</th>
+          <th>Version</th>
+          <th>Timestamp</th>
+          <th>Hostname</th>
+          <th>Appname</th>
+          <th>Procid</th>
+          <th>Message id</th>
+          <th>Structured data</th>
+          <th>Message</th>
+        </tr>
+      </thead>
+      <tbody  *ngFor="let log of logs; let i = index">
+        <tr>
+          <td>{{i + 1}}</td>
+          <td>{{log.prival}}</td>
+          <td>{{log.version}}</td>
+          <td>{{log.timestamp}}</td>
+          <td>{{log.hostname}}</td>
+          <td>{{log.appname}}</td>
+          <td>{{log.procid}}</td>
+          <td>{{log.msgid}}</td>
+          <td>{{log.sd}}</td>
+          <td>{{log.message}}</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+
