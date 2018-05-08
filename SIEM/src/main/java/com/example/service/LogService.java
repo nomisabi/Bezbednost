@@ -204,7 +204,7 @@ public class LogService {
 			if (start) {
 				if (count==0) {
 					add=add+" "+string;
-				} else if (count==1 && string.endsWith("\""))  {
+				} else if ((count==1 && string.endsWith("\"")) || (count==1 && string.endsWith("\")")))  {
 					add=add+" "+string;
 					list.add(add);
 					add="";
@@ -267,7 +267,50 @@ private List<Log> union(List<Log> original, List<Log> or){
 		String[] pieces= search.split(" ");
 		ArrayList<String> parts= (ArrayList<String>) mixString(pieces);
 		String mod="";
+		String text="";
 		while (parts.size()!=0) {
+			if (parts.get(0).startsWith("(")){
+				if (parts.get(0).contains(")")){
+					String[] darabkak=  parts.get(0).split(")");
+					text=darabkak[0].split("(")[0];
+					if  (mod.equals("and")) {
+						ArrayList<Log> and= (ArrayList<Log>) findAllBySearch(text);
+						logs=section(logs, and);
+						mod="";
+					} else if  (mod.equals("or")) {
+						ArrayList<Log> or= (ArrayList<Log>) findAllBySearch(text);
+						logs=union(logs, or);
+						mod="";
+					}else if  (mod.equals("")) {
+						logs= findAllBySearch(text);							
+					}
+					text="";
+				} else {
+					text=text+" "+parts.get(0);
+					parts.remove(0);	
+					continue;
+				}
+			}
+			if (!text.equals("")){
+				text=text+ " "+parts.get(0);
+				if (text.contains(")")){
+					String t= text.substring(2, text.length()-1);
+					if  (mod.equals("and")) {
+						ArrayList<Log> and= (ArrayList<Log>) findAllBySearch(t);
+						logs=section(logs, and);
+						mod="";
+					} else if  (mod.equals("or")) {
+						ArrayList<Log> or= (ArrayList<Log>) findAllBySearch(t);
+						logs=union(logs, or);
+						mod="";
+					}else if  (mod.equals("")) {
+						logs= findAllBySearch(t);							
+					}	
+					text="";
+				}				
+				parts.remove(0);	
+				continue;
+			}
 		if (mod.equals(""))
 			if (parts.get(0).equals("and")) {
 				mod="and";
