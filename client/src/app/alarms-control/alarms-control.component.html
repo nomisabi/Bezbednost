@@ -1,6 +1,8 @@
-<a href="/#/alarms/new">New</a>
 
-<div class="container">                                                                     
+<div class="container">    
+    <button class="btn btn-default" (click)="newAlarm()">New</button>  
+    <br>      
+    <br>                                                            
   <div class="table-responsive">          
   <table class="table table-striped">
     <thead>
@@ -14,7 +16,7 @@
       </tr>
     </thead>
     <tbody  *ngFor="let alarm of alarms; let i = index">
-      <tr (click)="showAlarm(alarm.id)">
+      <tr>
         <td>{{i + 1}}</td>
         <td>{{alarm.name}}</td>
         <td>{{alarm.description}}</td>

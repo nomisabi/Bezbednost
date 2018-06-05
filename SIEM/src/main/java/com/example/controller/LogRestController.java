@@ -55,7 +55,7 @@ public class LogRestController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/api/alarms/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/api/alarms/{id}", method = RequestMethod.DELETE, produces = "application/json")
 	public ResponseEntity<Void> deleteAlarm( @PathVariable("id") Long id ) {
 			Optional<Alarm> a= alarmService.findOne(id);
 			Alarm alarm=null;
@@ -84,7 +84,7 @@ public class LogRestController {
 			return new ResponseEntity<>(alarm, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/api/alarms", method = RequestMethod.GET)
+	@RequestMapping(value = "/api/alarms", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<List<Alarm>> getAlarms() {
 			List<Alarm> alarm=alarmService.findAll();
 			

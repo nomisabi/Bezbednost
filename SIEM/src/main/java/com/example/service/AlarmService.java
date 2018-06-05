@@ -62,24 +62,28 @@ public class AlarmService {
 				sd=true;
 				valueSd=getSdValue(entry.getKey().getSd(), alarm.getSd());
 			}
+			boolean forFrom=false;
 			for (Entry<Log, Date>  entry2 : treeMap.entrySet()) {
-				if (entry.getKey()!=entry2.getKey()) {
-				if (sd) {
-					String value= getSdValue(entry2.getKey().getSd(), alarm.getSd());
-					if (value.equals(valueSd))
-						if ((entry.getValue().getTime()-entry2.getValue().getTime())/1000<alarm.getSeconds())
-							temp++;
-				}else {
-					if ((entry.getValue().getTime()-entry2.getValue().getTime())/1000<alarm.getSeconds())
-						temp++;
+				if (entry.getKey()==entry2.getKey()) {
+					forFrom= true;
 				}
-				
-			
+				if (entry.getKey()!=entry2.getKey()) {
+					if (forFrom) {
+						if (sd) {
+							String value= getSdValue(entry2.getKey().getSd(), alarm.getSd());
+							if (value.equals(valueSd))
+								if ((entry.getValue().getTime()-entry2.getValue().getTime())/1000<alarm.getSeconds())
+									temp++;
+						}else {
+							if ((entry.getValue().getTime()-entry2.getValue().getTime())/1000<alarm.getSeconds())
+								temp++;
+						}
+					}
+				}
 			}
 			if (temp>=alarm.getNumber())
 				logAlarm.add(entry.getKey());
 			}
-		}
 		alarm.setLogs(logAlarm);
 		alarmRepository.save(alarm);
 	}

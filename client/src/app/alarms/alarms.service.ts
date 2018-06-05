@@ -23,7 +23,7 @@ export class AlarmsService {
 
   getAlarms():Promise<AlarmInterface[]> {
     return this.http
-    .get<AlarmInterface[]>(this.url, )
+    .get<AlarmInterface[]>(this.url, {'headers':this.headers} )
     .toPromise()
     .then(res => res)
     .catch(this.handleError);
@@ -32,7 +32,7 @@ export class AlarmsService {
   getAlarm(id: number):Promise<AlarmInterface> {
     let url=this.url+'/'+id;
     return this.http
-    .get<AlarmInterface>(url)
+    .get<AlarmInterface>(url, {'headers':this.headers})
     .toPromise()
     .then(res => res)
     .catch(this.handleError);
@@ -41,7 +41,7 @@ export class AlarmsService {
   deleteAlarm(id: number):Promise<AlarmInterface> {
     let url=this.url+'/'+id;
     return this.http
-    .delete<AlarmInterface>(url)
+    .delete<AlarmInterface>(url, {'headers':this.headers})
     .toPromise()
     .then(res => res)
     .catch(this.handleError);

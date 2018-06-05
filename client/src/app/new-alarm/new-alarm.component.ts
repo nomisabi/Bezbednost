@@ -32,6 +32,10 @@ export class NewAlarmComponent implements OnInit {
     }
   }
 
+  back(){
+    this.router.navigate(['/alarms']);
+  }
+
   ngOnInit() {
   }
 

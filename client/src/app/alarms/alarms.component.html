@@ -1,4 +1,19 @@
-<div class="container">                                                              
+<div class="container">  
+
+  <button (click)="showHide()" class="btn btn-default" > Setting</button>
+  <div *ngIf="show" class="col-sm-4" >
+      <table class="table table-striped" >
+          <tbody  *ngFor="let item of alarmList.items" >
+              <tr>
+                <td>{{item.alarm.name}}</td>
+                <td *ngIf="item.show" (click)="remove(item.alarm)"><input type="checkbox" name="item" checked></td>
+                <td *ngIf="!item.show" (click)="add(item.alarm)"><input type="checkbox" name="item"></td>
+              </tr>
+              </tbody>
+        </table>
+  </div>
+  <br>
+  <br>
   <div class="table-responsive">          
   <table class="table table-striped" >
     <thead>
@@ -15,8 +30,8 @@
         <th>Alarm</th>
       </tr>
     </thead>
-    <tbody  *ngFor="let alarm of alarms">
-      <tr *ngFor="let log of alarm.logs">
+    <tbody  *ngFor="let alarm of alarms" >
+      <tr *ngFor="let log of alarm.logs" (click)="showAlarm(alarm.id)">
         <td>{{log.prival}}</td>
         <td>{{log.version}}</td>
         <td>{{log.timestamp}}</td>

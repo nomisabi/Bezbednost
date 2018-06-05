@@ -36,7 +36,11 @@ export class AlarmDetailsComponent implements OnInit {
   ngOnInit() {
     this.alarmService.getAlarm(+this.route.snapshot.params['id']).then(
       res=>this.alarm=res
-    ).catch(err=>this.router.navigate['alarms/control'])
+    ).catch(err=>this.router.navigate(['alarms']))
+  }
+
+  back(){
+    this.router.navigate(['alarms'])
   }
 
 }

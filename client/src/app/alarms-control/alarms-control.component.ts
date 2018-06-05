@@ -33,15 +33,30 @@ export class AlarmsControlComponent implements OnInit {
   showAlarm(id:number){
     console.log(id);
     let path='/#/alarms/'+id;
-    this.router.navigate(['/alarms', id]);
+    
   }
   
   deleteAlarm(id:number){
     this.alarmService.deleteAlarm(id).then(
-      res=>this.getAlarms()
+      res=>{
+        console.log('good');
+        this.alarms=[]
+        this.getAlarms()
+        
+      }
+    ).catch(
+      res=>{
+        console.log('bad')
+        this.alarms=[]
+        this.getAlarms()
+        //window.location.reload()
+      }
     )
   }
 
 
+  newAlarm(){
+    this.router.navigate(['/alarms/new']);
+  }
 
 }
