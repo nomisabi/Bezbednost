@@ -1,0 +1,91 @@
+<div class="container">
+  <h2>New alarm</h2>
+  <form class="form-horizontal">
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="name">Name*:</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="name"  required minlength="4" placeholder="Enter name" name="name" [(ngModel)]="newAlarm.name">
+
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="desc">Description*:</label>
+      <div class="col-sm-10">          
+        <input type="text" class="form-control" id="desc" placeholder="Enter description" name="desc" [(ngModel)]="newAlarm.description">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="vers">Number*:</label>
+      <div class="col-sm-10">          
+        <input type="number" class="form-control" id="vers" name="vers" [(ngModel)]="newAlarm.number">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="prival">Seconds*:</label>
+      <div class="col-sm-10">          
+        <input type="number" class="form-control" id="prival"  name="prival" [(ngModel)]="newAlarm.seconds">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="vers">Version:</label>
+      <div class="col-sm-10">          
+        <input type="number" class="form-control" id="vers" name="vers" [(ngModel)]="newAlarm.version">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="prival">Prival:</label>
+      <div class="col-sm-10">          
+        <input type="number" class="form-control" id="prival"  name="prival" [(ngModel)]="newAlarm.prival">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="timestamp">Timestamp:</label>
+      <div class="col-sm-10">          
+        <input type="text" class="form-control" id="timestamp" name="timestamp" [(ngModel)]="newAlarm.timestamp">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="hostname">Hostname:</label>
+      <div class="col-sm-10">          
+        <input type="text" class="form-control" id="hostname" name="hostname" [(ngModel)]="newAlarm.hostname">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="appname">Appname:</label>
+      <div class="col-sm-10">          
+        <input type="text" class="form-control" id="appname" name="appname" [(ngModel)]="newAlarm.appname">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="procid">Procid:</label>
+      <div class="col-sm-10">          
+        <input type="text" class="form-control" id="procid" name="procid" [(ngModel)]="newAlarm.procid">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="msgid">Msgid:</label>
+      <div class="col-sm-10">          
+        <input type="text" class="form-control" id="msgid"  name="msgid" [(ngModel)]="newAlarm.msgid">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="sd">Stuctured data:</label>
+      <div class="col-sm-10">          
+        <input type="text" class="form-control" id="sd" name="sd" [(ngModel)]="newAlarm.sd">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="msg">Mesasge:</label>
+      <div class="col-sm-10">          
+        <input type="text" class="form-control" id="msg" name="msg" [(ngModel)]="newAlarm.msg">
+      </div>
+    </div>
+    <div class="form-group">        
+      <div class="col-sm-offset-2 col-sm-10">
+        <button  class="btn btn-default" (click)="newAlarmClick()">Submit</button>
+      </div>
+    </div>
+    
+  </form>
+</div>
+<a href="/#/alarms/control">Back</a>

@@ -1,0 +1,93 @@
+<div class="container">
+  <h2>Alarm {{alarm.id}}</h2>
+  <form class="form-horizontal">
+    <div class="form-group">
+      <label class="col-sm-12" for="name"><b>Name: </b>{{alarm.name}} </label>
+      
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="desc"><b>Description:</b></label>
+      <div  class="control-label col-sm-10">{{alarm.description}}</div>  
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-4" for="vers"><b>Number:</b> {{alarm.number}}</label>
+      <label class="control-label col-sm-4" for="prival"><b>Seconds:</b> {{alarm.seconds}}</label>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-4" for="vers"><b>Version:</b> {{alarm.version}}</label>
+      <label class="control-label col-sm-4" for="prival"><b>Prival: </b>{{alarm.prival}}</label>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="timestamp"><b>Timestamp:</b> {{alarm.timestamp}} </label>
+      <div class="col-sm-10">          
+        <p></p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-4" for="hostname"><b>Hostname: </b>{{alarm.hostname}}</label>
+      <label class="control-label col-sm-4" for="appname"><b>Appname:</b> {{alarm.appname}}</label>
+     
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-4" for="procid"><b>Procid:</b> {{alarm.procid}}</label>
+      <label class="control-label col-sm-2" for="msgid"><b>Msgid:</b> {{alarm.msgid}}</label>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="sd"><b>Stuctured data:</b></label>
+      <div class="col-sm-10">          
+        <p>{{alarm.sd}} </p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="msg"><b>Mesasge:</b></label>
+      <div class="col-sm-10">          
+        <p>{{alarm.msf}} </p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="msg"><b>Logs:</b></label>
+      <div class="col-sm-10">          
+        <div class="container"> 
+                                                               
+          <div class="table-responsive">          
+          <table class="table table-striped" >
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Priority value</th>
+                <th>Version</th>
+                <th>Timestamp</th>
+                <th>Hostname</th>
+                <th>Appname</th>
+                <th>Procid</th>
+                <th>Message id</th>
+                <th>Structured data</th>
+                <th>Message</th>
+              </tr>
+            </thead>
+            <tbody  *ngFor="let log of alarm.logs; let i = index">
+              <tr>
+                <td>{{i + 1}}</td>
+                <td>{{log.prival}}</td>
+                <td>{{log.version}}</td>
+                <td>{{log.timestamp}}</td>
+                <td>{{log.hostname}}</td>
+                <td>{{log.appname}}</td>
+                <td>{{log.procid}}</td>
+                <td>{{log.msgid}}</td>
+                <td>{{log.sd}}</td>
+                <td>{{log.msg}}</td>
+              </tr>
+            </tbody>
+          </table>
+          </div>
+        </div>
+      
+      
+      
+      </div>
+    </div>
+  </form>
+</div>
+<a href="/#/alarms/control">Back</a>

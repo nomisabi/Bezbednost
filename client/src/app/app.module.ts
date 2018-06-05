@@ -11,15 +11,23 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { LogsComponent } from './logs/logs.component';
 import { LogsService } from './logs/logs.service';
-
-
+import { RouterModule } from '@angular/router';
+import { AlarmsComponent } from './alarms/alarms.component';
+import { AlarmsControlComponent } from './alarms-control/alarms-control.component';
+import { NewAlarmComponent } from './new-alarm/new-alarm.component';
+import { AlarmDetailsComponent } from './alarm-details/alarm-details.component';
+import { AlarmsService } from './alarms/alarms.service';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    LogsComponent
+    LogsComponent,
+    AlarmsComponent,
+    AlarmsControlComponent,
+    NewAlarmComponent,
+    AlarmDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +37,8 @@ import { LogsService } from './logs/logs.service';
     HttpClientModule
   ],
   providers: [
-    LogsService
+    LogsService,
+    AlarmsService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,31 +1,154 @@
 package com.example.service;
 
+import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import com.example.model.Alarm;
 import com.example.model.Log;
+import com.example.repository.AlarmRepository;
 import com.example.repository.LogRepository;
 
 @Service
 public class LogService {
 	@Autowired
 	private LogRepository logRepository;
+	@Autowired
+	private AlarmRepository alarmRepository;
 
-	public void save(String logStr) {
+	public void save(String logStr) throws ParseException {
 		System.out.println(logStr);
 		String lines[] = logStr.split("\\r?\\n");
 		for (String line : lines) {
 			Log log = parseLine(line);
-			logRepository.save(log);
+			log=logRepository.save(log);
+			alarms(log);
 		}
 	}
 
+	private void alarms(Log log) throws ParseException {
+		List<Alarm> alarms= alarmRepository.findAll();
+		if (log.getMsgid().equals("2OUT")) {
+			System.out.println("juhe");
+		}
+		for (Alarm alarm : alarms) {
+			if (conditions(alarm, log)) {
+				List<Log> logs = findAll();
+				List<Log> logsCond= new ArrayList<>();
+				boolean sd=false;
+				String valueSd="";
+				if (!alarm.getSd().equals("")) {
+					sd=true;
+					valueSd=getSdValue(log.getSd(), alarm.getSd());
+				}
+				for (Log log2 : logs) {
+					if (conditions(alarm, log2)) {
+						if (sd) {
+							String value= getSdValue(log2.getSd(), alarm.getSd());
+							if (value.equals(valueSd))
+								logsCond.add(log2);
+						}else {
+							logsCond.add(log2);
+						}
+					}
+				}
+				isAlarmed(alarm, log, logsCond);
+			}
+		}
+		
+	}
+	
+	private String getSdValue(String sd, String alarmValue) {
+		String[] x= sd.split(" ");
+		for (String x_i : x) {
+			if (x_i.toLowerCase().contains(alarmValue.toLowerCase())) {
+				String[] y= x_i.split("\"");
+				return y[1];
+			}
+		}
+		return null;
+	}
+	
+	public List<Log> findAll() {
+		return logRepository.findAll();
+	}
+	
+	private void isAlarmed(Alarm alarm, Log log, List<Log> logs) throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+		int temp=1;
+		Date logDate=  (Date) formatter.parse(log.getTimestamp());
+		for (Log log2 : logs) {
+			Date d=  (Date) formatter.parse(log2.getTimestamp());
+			if ((logDate.getTime()-d.getTime())/1000< alarm.getSeconds()) {
+				temp++;
+			}
+		}
+		try {
+		if (temp>=alarm.getNumber()) {
+			Set<Log> alarm_log= new HashSet<Log>(alarm.getLogs());
+			alarm_log.add(log);
+			alarm.setLogs(alarm_log);
+			//alarmRepository.delete(alarm);
+			alarmRepository.save(alarm);
+		}} catch (Exception e) {
+			// TODO: handle exception
+		}
+			
+	}
+	
+	private boolean conditions(Alarm a, Log l) {
+		if (!(a.getAppname().equals(""))) {
+			if (!l.getAppname().toLowerCase().contains(a.getAppname().toLowerCase()))
+				return false;
+		}
+		if (!(a.getHostname().equals(""))) {
+			if (!l.getHostname().toLowerCase().contains(a.getHostname().toLowerCase()))
+				return false;
+		}
+		if (!(a.getAppname().equals(""))) {
+			if (!l.getAppname().toLowerCase().contains(a.getAppname().toLowerCase()))
+				return false;
+		}
+		if (!(a.getMsg().equals(""))) {
+			if (!l.getMsg().toLowerCase().contains(a.getMsg().toLowerCase()))
+				return false;
+		}
+		if (!(a.getMsgid().equals(""))) {
+			if (!l.getMsgid().toLowerCase().contains(a.getMsgid().toLowerCase()))
+				return false;
+		}
+		if (!(a.getProcid().equals(""))) {
+			if (!l.getProcid().toLowerCase().contains(a.getProcid().toLowerCase()))
+				return false;
+		}
+		if (!(a.getSd().equals(""))) {
+			if (!l.getSd().toLowerCase().contains(a.getSd().toLowerCase()))
+				return false;
+		}
+		if (!(a.getTimestamp().equals(""))) {
+			if (!l.getTimestamp().toLowerCase().contains(a.getTimestamp().toLowerCase()))
+				return false;
+		}
+		if (a.getPrival()!=0) {
+			if (l.getPrival()!=a.getPrival())
+				return false;
+		}
+		if (a.getVersion()>0) {
+			if (l.getVersion()!=a.getVersion())
+				return false;
+		}
+		return true;
+	}
+	
 	private Log parseLine(String line) {
 		String[] splited = line.split("\\s+");
 		String[] splited2 = splited[0].split(">");
@@ -191,7 +314,7 @@ public class LogService {
 						
 					}
 		
-		return new ArrayList<Log>();
+		return null;
 	}
 	
 	private List<String> mixString(String[] pieces) {
@@ -211,6 +334,7 @@ public class LogService {
 					start=false;
 				} else {
 					System.out.println("error");
+					return null;
 				}
 				if (x==1) {
 					x++;
@@ -234,8 +358,10 @@ public class LogService {
 					add=string;
 					x++;
 				}
-				else
+				else {
 					System.out.println("error");
+					return null;
+				}
 			}
 		}
 		
@@ -262,10 +388,14 @@ private List<Log> union(List<Log> original, List<Log> or){
 	}
 	
 	public List<Log> findAllBySearch(String search) {
+		System.out.println("Nem mukszik a debug");
 		List<Log> logs = new ArrayList<Log>();
 		
 		String[] pieces= search.split(" ");
 		ArrayList<String> parts= (ArrayList<String>) mixString(pieces);
+		if (parts==null)
+			return null;
+		System.out.println("Nem mukszik a debug");
 		String mod="";
 		String text="";
 		while (parts.size()!=0) {

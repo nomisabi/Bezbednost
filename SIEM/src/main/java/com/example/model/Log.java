@@ -1,8 +1,12 @@
 package com.example.model;
 
+import java.util.Set;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Log {
@@ -36,6 +40,16 @@ public class Log {
 		this.msgid = msgid;
 		this.sd = sd;
 		this.msg = msg;
+	}
+
+	
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public int getPrival() {

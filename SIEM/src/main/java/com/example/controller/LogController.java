@@ -1,5 +1,7 @@
 package com.example.controller;
 
+import java.text.ParseException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.service.LogService;
@@ -11,7 +13,7 @@ public class LogController {
 	@Autowired
 	private LogService logService;
 
-	public void receiveData(Connection connection, byte[] data) {
+	public void receiveData(Connection connection, byte[] data) throws ParseException {
 		String s = new String(data);
 		connection.send(s.toUpperCase().getBytes());
 		logService.save(s);

@@ -1,0 +1,36 @@
+<div class="container">                                                              
+  <div class="table-responsive">          
+  <table class="table table-striped" >
+    <thead>
+      <tr>
+        <th>Priority value</th>
+        <th>Version</th>
+        <th>Timestamp</th>
+        <th>Hostname</th>
+        <th>Appname</th>
+        <th>Procid</th>
+        <th>Message id</th>
+        <th>Structured data</th>
+        <th>Message</th>
+        <th>Alarm</th>
+      </tr>
+    </thead>
+    <tbody  *ngFor="let alarm of alarms">
+      <tr *ngFor="let log of alarm.logs">
+        <td>{{log.prival}}</td>
+        <td>{{log.version}}</td>
+        <td>{{log.timestamp}}</td>
+        <td>{{log.hostname}}</td>
+        <td>{{log.appname}}</td>
+        <td>{{log.procid}}</td>
+        <td>{{log.msgid}}</td>
+        <td>{{log.sd}}</td>
+        <td>{{log.msg}}</td>
+        <td>{{alarm.name}}</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+

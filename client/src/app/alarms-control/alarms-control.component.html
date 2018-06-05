@@ -1,0 +1,31 @@
+<a href="/#/alarms/new">New</a>
+
+<div class="container">                                                                     
+  <div class="table-responsive">          
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Seconds</th>
+        <th>Number</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody  *ngFor="let alarm of alarms; let i = index">
+      <tr (click)="showAlarm(alarm.id)">
+        <td>{{i + 1}}</td>
+        <td>{{alarm.name}}</td>
+        <td>{{alarm.description}}</td>
+        <td>{{alarm.seconds}}</td>
+        <td>{{alarm.number}}</td>
+        <td *ngIf="alarm.canDelete" (click)="deleteAlarm(alarm.id)">Delete</td>
+        <td *ngIf="!alarm.canDelete">:)</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+
